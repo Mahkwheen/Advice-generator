@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Advice generator app</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      html {
+        font-family: sans-serif;
+      }
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+      .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background-color: hsl(218, 23%, 16%);
+      }
+      .container {
+        text-align: center;
+        background-color: hsl(217, 19%, 24%);
+        width: 30%;
+        padding-block: 20px;
+        border-radius: 10px;
+      }
+      .head-text {
+        color: hsl(150, 100%, 66%);
+        font-size: 14px;
+      }
+      .main-text-container {
+        padding-block: 20px;
+        width: 80%;
+        margin: 0 auto;
+      }
+      .main-text {
+        color: hsl(193, 38%, 86%);
+        font-size: 20px;
+      }
+      .divider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-block: 30px;
+      }
+      .thin-line {
+        border-bottom: 1px solid hsl(220, 20%, 38%);
+        width: 45%;
+        margin-right: 8px;
+      }
+      .thick-line {
+        border: 3px solid hsl(193, 38%, 86%);
+        height: 15px;
+        border-radius: 5px;
+        margin-right: 8px;
+      }
+      .btn-container {
+        cursor: pointer;
+        background-color: hsl(150, 100%, 66%);
+        border-radius: 50px;
+        padding: 10px;
+        width: 3em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 0.3s ease-out;
+      }
+      .btn-container:hover {
+        box-shadow: 0 0 25px hsl(150, 100%, 66%);
+      }
+      @media only screen and (max-width: 1200px) {
+        .container {
+          width: 35%;
+        }
+      }
+      @media only screen and (max-width: 900px) {
+        .container {
+          width: 37%;
+        }
+      }
+      @media only screen and (max-width: 650px) {
+        .container {
+          width: 42%;
+        }
+      }
+      @media only screen and (max-width: 550px) {
+        .container {
+          width: 45%;
+        }
+      }
+      @media only screen and (max-width: 500px) {
+        .container {
+          width: 50%;
+        }
+      }
+      @media only screen and (max-width: 450px) {
+        .container {
+          width: 60%;
+        }
+      }
+      @media only screen and (max-width: 400px) {
+        .container {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- <div id="errMessage">An Error Occurred</div> -->
+      <div class="container">
+        <p class="head-text">Advice #<span id="adviceID"></span></p>
+        <div class="main-text-container">
+          <p class="main-text" id="advice">
+            "Its easy to sit up and take notice, what is difficult is getting up
+            and taking actions"
+          </p>
+          <div class="divider">
+            <div class="thin-line"></div>
+            <div class="thick-line"></div>
+            <div class="thick-line"></div>
+            <div class="thin-line"></div>
+          </div>
+        </div>
+        <!-- onClick="window.location.reload()" -->
+        <div class="btn-container" onclick="reload()"> 
+          <img id="btn" src="images/icon-dice.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <!-- Advice ID goes here -->
+
+    "<!-- Advice text goes here -->"
+
+    <!-- <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Your Name Here</a>.
+  </div> -->
+    <script>
+      let btn = document.getElementById("btn");
+      let myAdvice = document.getElementById("advice");
+      let adviceID = document.getElementById("adviceID");
+      let errMessage = document.getElementById("errMessage");
+      reload = () =>{
+        setTimeout(window.location.reload(true), 2000)
+      }
+      getText("https://api.adviceslip.com/advice");
+
+      async function getText(file) {
+        let myObject = await fetch(file);
+        let myText = await myObject.json();
+        console.log(myText);
+        console.log(myText.slip.advice);
+        console.log(myText.slip.id);
+        myAdvice.innerHTML = `"${myText.slip.advice}"`;
+        adviceID.innerHTML = myText.slip.id;
+        return [advice, adviceID];
+      }
+    </script>
+  </body>
+</html>
